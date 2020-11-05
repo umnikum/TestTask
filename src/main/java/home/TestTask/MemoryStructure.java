@@ -30,7 +30,7 @@ public class MemoryStructure extends Thread{
 				entry.utilised = false;
 			}
 			try {
-				sleep(50);
+				sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -50,8 +50,9 @@ public class MemoryStructure extends Thread{
 	private void addValue(MemoryEntry entry) {
 		if(!wasHeaderWritten(entry.header))
 			memory.put(entry.header, new ArrayList<String>());
-		if((entry.value != null)&&(!wasValueWritten(entry.header, entry.value)))
+		if((entry.value != null)&&(!wasValueWritten(entry.header, entry.value))) {
 			memory.get(entry.header).add(new String(entry.value));
+		}
 	}
 	
 	public void terminate() {

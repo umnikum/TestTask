@@ -1,5 +1,5 @@
 package home.TestTask;
 
-public interface RecieveCommand extends Command {
+public interface RecieveRequest extends Request {
 	public String getLine();
 }

@@ -1,15 +1,15 @@
 package home.TestTask;
 
-public class RecieveHeaderCommand implements RecieveCommand {
+public class RecieveHeaderRequest implements RecieveRequest {
 
 	private String header;
 	
-	public RecieveHeaderCommand(String string) {
+	public RecieveHeaderRequest(String string) {
 		header = string;
 	}
 	
 	public int identify() {
-		return RECIEVE_HEADER_COMMAND;
+		return RECIEVE_HEADER_REQUEST;
 	}
 
 	public String getLine() {

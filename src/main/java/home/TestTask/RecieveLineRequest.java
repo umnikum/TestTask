@@ -1,15 +1,15 @@
 package home.TestTask;
 
-public class RecieveLineCommand implements RecieveCommand {
+public class RecieveLineRequest implements RecieveRequest {
 
 	private String line;
 	
-	public RecieveLineCommand(String string) {
+	public RecieveLineRequest(String string) {
 		line = string;
 	}
 	
 	public int identify() {
-		return RECIEVE_LINE_COMMAND;
+		return RECIEVE_LINE_REQUEST;
 	}
 
 	public String getLine() {
