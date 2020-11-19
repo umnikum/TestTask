@@ -3,8 +3,11 @@ package home.TestTask;
 public class MemoryEntry {
 	
 	public String header, value;
-	public boolean utilised = false;
+	public boolean utilised;
 	
+	public MemoryEntry() {
+		utilised = false;
+	}
 	
 	public void set(String header, String value) {
 		this.header = header;

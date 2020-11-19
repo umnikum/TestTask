@@ -10,20 +10,24 @@ public class MemoryStructure extends Thread{
 	private ConcurrentLinkedQueue<MemoryEntry> queue;
 	private Hashtable<String, List<String>> memory;
 	private MemoryEntryPool pool;
+	
 	private int state;
-	public static final int BUISY = 1, TERMINATING = 0;
+	public static final int BUSY = 1, TERMINATING = 0;
 	
 	public MemoryStructure() {
+		setName("Memory");
 		pool = new MemoryEntryPool();
 		memory = new Hashtable<String, List<String>>();
 		queue = new ConcurrentLinkedQueue<MemoryEntry>();
-		setName("Memory");
-		state = BUISY;
+		state = BUSY;
 	}
 	
-	@Override
+	public void terminate() {
+		state = TERMINATING;
+	}
+	
 	public void run() {
- 		while(state != TERMINATING) {
+		while((state != TERMINATING)||(!queue.isEmpty())) {
 			while(!queue.isEmpty()){
 				MemoryEntry entry = queue.poll();
 				addValue(entry);
@@ -31,11 +35,11 @@ public class MemoryStructure extends Thread{
 			}
 			try {
 				sleep(10);
-			} catch (InterruptedException e) {
+			}catch(InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
- 		System.out.print(toString());
+		System.out.print(toString());
 	}
 	
 	public MemoryEntry getMemoryEntry() {
@@ -43,8 +47,7 @@ public class MemoryStructure extends Thread{
 	}
 	
 	public void write(MemoryEntry entry) {
-		if(state != TERMINATING)
-			queue.add(entry);
+		queue.add(entry);
 	}
 	
 	private void addValue(MemoryEntry entry) {
@@ -54,11 +57,7 @@ public class MemoryStructure extends Thread{
 			memory.get(entry.header).add(new String(entry.value));
 		}
 	}
-	
-	public void terminate() {
-		state = TERMINATING;
-	}
-	
+
 	private boolean wasHeaderWritten(String header) {
 		return memory.containsKey(header);
 	}
